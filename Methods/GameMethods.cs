@@ -23,7 +23,7 @@ namespace HabaneroCodeTest.Methods
         private const string APIKeyGames = "A50C2BDA-4ACF-42E8-AE22-971A9A9F47C7";
         private const string BrandIdGames = "0d51cf4c-1d02-e711-80d9-000d3a802d1d";
         private const string URLGetGames = "https://ws-test.insvr.com/jsonapi/GetGames";
-        private string HostName = Dns.GetHostName();
+        private string HostName = HttpContext.Current.Request.Url.Authority;
         public JObject JsonObject;
         public string ImgEndpoint = "https://app-test.insvr.com/img/";
         public string GameEndpoint = "https://app-test.insvr.com/games/";
@@ -98,16 +98,25 @@ namespace HabaneroCodeTest.Methods
             foreach(var g in items.Games)
             {
                 var r = "";
-                createListOfGames.Add(
-                    new Game
+                var GameData = new Game
+                {
+                    BrandGameId = g.BrandGameId,
+                    Name = g.Name,
+                    KeyName = g.KeyName,
+                    TranslatedNames = g.TranslatedNames,
+                    Logos = new Logo
                     {
-                        BrandGameId = g.BrandGameId,
-                        Name = g.Name,
-                        KeyName = g.KeyName,
-                        TranslatedNames = g.TranslatedNames,
-                        Logo = $"{ImgEndpoint}circle/400/{g.KeyName}.png",
-                        PlayLink = $"{GameEndpoint}?brandid={BrandIdGames}&keyname={g.KeyName}&mode=fun&lobbyurl={HostName}",
-                    }
+                        Circle = $"{ImgEndpoint}circle/400/{g.KeyName}.png",
+                        CircleFlat = $"{ImgEndpoint}circleflat/400/{g.KeyName}.png",
+                        Rectangle = $"{ImgEndpoint}rectangle/400/{g.KeyName}.png",
+                        Square = $"{ImgEndpoint}square/400/{g.KeyName}.png",
+                        Oval = $"{ImgEndpoint}oval/400/{g.KeyName}.png",
+                        OvalFlat = $"{ImgEndpoint}ovalflat/400/{g.KeyName}.png",
+                    },
+                    PlayLink = $"{GameEndpoint}?brandid={BrandIdGames}&keyname={g.KeyName}&mode=fun&lobbyurl={HostName}",
+                };
+                createListOfGames.Add(
+                    GameData
                 );
                 //TODO
             }

@@ -8,16 +8,24 @@
         <h1 id="title">GAMES</h1>
     </section>
     <div ng-app="gamesAngularList" ng-controller="gamesAngularController"  class="row">
-        <div class="col-md-3 col-xs-12">
-            <span>Search for Game:</span>
-            <br />
-            <input type="text" ng-model="searchGameByName" />
+        <div class="col-md-3 col-xs-12 filter-sections border-right">
+            <label>
+                Search for Game:
+                <input type="text" ng-model="searchGameByName" />
+            </label>
+            <label>
+                Logo Type
+                <br/>
+                <select ng-model="logoType" ng-options="x for (x,y) in logoTypes">
+                    
+                </select>
+            </label>
         </div>
         <div class="col-md-9 col-xs-12 games-list">
             <div class="row">
                 <div ng-repeat="game in angularModel | filter : {Name: searchGameByName}" class="col-xs-6 col-md-3">
                     <a href="{{game.PlayLink}}" target="_blank">
-                        <img src="{{game.Logo}}" />
+                        <img src="{{game.Logos.Circle}}" />
                         <span><strong>{{game.Name}}</strong></span>
                         <span>{{game.TranslatedNames[2].Translation}}</span>
                     </a>
@@ -31,8 +39,11 @@
 @section scripts{
     <script>
         var app = angular.module('gamesAngularList', []);
+        var gameModel = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+        console.log(gameModel);
         app.controller('gamesAngularController', function ($scope) {
-            $scope.angularModel = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+            $scope.angularModel = gameModel;
+            $scope.logoTypes = gameModel[0].Logos;
         });
         //console.log(model);
         //console.log(model[0].Id);
@@ -43,25 +54,33 @@
 
 @section styles{
     <style>
-            .games-list {
-                text-align: center;
-                padding-top: 20px;
-            }
-            .games-list .col-md-3 {
-                text-align: center;
-            }
-            .games-list .col-md-3 img {
-                width: 100%;
-                min-width: 100%;
-            }
-            .games-list .col-md-3 span {
-                display: block;
-                color: #000;
-                text-decoration: none;
-                padding: 5px 0;
-            }
-            .games-list .col-md-3 a {
-                text-decoration: none;
-            }
+        .games-list {
+            text-align: center;
+            padding-top: 20px;
+        }
+        .games-list .col-md-3 {
+            text-align: center;
+        }
+        .games-list .col-md-3 img {
+            width: 100%;
+            min-width: 100%;
+        }
+        .games-list .col-md-3 span {
+            display: block;
+            color: #000;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+        .games-list .col-md-3 a {
+            text-decoration: none;
+        }
+        .filter-sections label{
+            padding-bottom: 10px;
+            display: block
+        }
+
+        .filter-sections input, .filter-sections select {
+            width: 190px
+        }
     </style>    
 }
