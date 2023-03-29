@@ -1,8 +1,10 @@
 ﻿using HabaneroCodeTest.Models;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Http;
+using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -13,6 +15,7 @@ namespace HabaneroCodeTest.Methods
     {
         //HttpClient client = new HttpClient();
 
+        ObjectCache cache = MemoryCache.Default;
         private string APIKeyGames = ConfigurationManager.AppSettings["APIKeyGames"];
         private string BrandIdGames = ConfigurationManager.AppSettings["BrandIdGames"];
         private string URLGetGames = ConfigurationManager.AppSettings["URLGetGames"];
@@ -53,9 +56,23 @@ namespace HabaneroCodeTest.Methods
 
         public List<Game> ListOfGames()
         {
-            var callHaba = CallHaba(URLGetGames, BrandIdGames, APIKeyGames);
-            var items = JsonConvert.DeserializeObject<GamesResponse>(callHaba.Result);
+            string cacheKey = "listOfGames";
+            var cacheItemPolicy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(60.0),
 
+            };
+            cache.Get(cacheKey);
+            var itemsData = cache.Get(cacheKey);
+
+            if (itemsData == null) 
+            { 
+                var callHaba = CallHaba(URLGetGames, BrandIdGames, APIKeyGames);
+                itemsData = callHaba.Result;
+                cache.Add(cacheKey, itemsData, cacheItemPolicy);
+            }
+
+            var items = JsonConvert.DeserializeObject<GamesResponse>(itemsData.ToString());
             var createListOfGames = new List<Game>();
 
             foreach(var g in items.Games)

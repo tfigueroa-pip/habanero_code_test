@@ -156,3 +156,11 @@ C:\Users\timdesktop\source\repos\HabaneroCodeTest\obj\Debug\HabaneroCodeTest.csp
 C:\Users\timdesktop\source\repos\HabaneroCodeTest\obj\Debug\HabaneroCodeTest.csproj.CopyComplete
 C:\Users\timdesktop\source\repos\HabaneroCodeTest\obj\Debug\HabaneroCodeTest.dll
 C:\Users\timdesktop\source\repos\HabaneroCodeTest\obj\Debug\HabaneroCodeTest.pdb
+C:\TIM\dev\HabaneroCodeTest\bin\System.Configuration.ConfigurationManager.dll
+C:\TIM\dev\HabaneroCodeTest\bin\System.Security.AccessControl.dll
+C:\TIM\dev\HabaneroCodeTest\bin\System.Security.Permissions.dll
+C:\TIM\dev\HabaneroCodeTest\bin\System.Security.Principal.Windows.dll
+C:\TIM\dev\HabaneroCodeTest\bin\System.Configuration.ConfigurationManager.xml
+C:\TIM\dev\HabaneroCodeTest\bin\System.Security.AccessControl.xml
+C:\TIM\dev\HabaneroCodeTest\bin\System.Security.Permissions.xml
+C:\TIM\dev\HabaneroCodeTest\bin\System.Security.Principal.Windows.xml
