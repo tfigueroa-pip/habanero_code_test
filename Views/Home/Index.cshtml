@@ -7,30 +7,43 @@
     <section class="row" aria-labelledby="aspnetTitle" style="text-align: center">
         <h1 id="title">GAMES</h1>
     </section>
-    <div ng-app="gamesAngularList" ng-controller="gamesAngularController" style="text-align: center">
-        <div>
-            <span>Search for Games by English Name:</span>
-            <br/>
-            <input type="text" ng-model="searchGameByName"/>
+    <div ng-app="gamesAngularList" ng-controller="gamesAngularController"  class="row">
+        <div class="col-md-3 col-xs-12 filter-sections border-right">
+            <label>
+                Search for Game:
+                <input type="text" ng-model="searchGameByName" />
+            </label>
+            <label>
+                Logo Type
+                <br/>
+                <select ng-model="logoType" ng-options="x for (x,y) in logoTypes">
+                    
+                </select>
+            </label>
         </div>
-        
-        <ul class="games-list">
-            <li ng-repeat="game in angularModel | filter : searchGameByName">
-                <a href="{{game.PlayLink}}" target="_blank">
-                    <img src="{{game.Logo}}" />
-                    <span><strong>{{game.Name}}</strong></span>
-                    <span>{{game.TranslatedNames[2].Translation}}</span>
-                </a>
-            </li>
-        </ul>
+        <div class="col-md-9 col-xs-12 games-list">
+            <div class="row">
+                <div ng-repeat="game in angularModel | filter : {Name: searchGameByName}" class="col-xs-6 col-md-3">
+                    <a href="{{game.PlayLink}}" target="_blank">
+                        <img src="{{game.Logos.Circle}}" />
+                        <span><strong>{{game.Name}}</strong></span>
+                        <span>{{game.TranslatedNames[2].Translation}}</span>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
     </div>
 </main>
 
 @section scripts{
     <script>
         var app = angular.module('gamesAngularList', []);
+        var gameModel = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+        console.log(gameModel);
         app.controller('gamesAngularController', function ($scope) {
-            $scope.angularModel = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+            $scope.angularModel = gameModel;
+            $scope.logoTypes = gameModel[0].Logos;
         });
         //console.log(model);
         //console.log(model[0].Id);
@@ -43,28 +56,31 @@
     <style>
         .games-list {
             text-align: center;
-            display: block;
             padding-top: 20px;
         }
-        .games-list li {
-            display: inline-block;
-            list-style: none;
-            margin: 0 auto;
-            max-width: 350px;
-            margin: 10px 30px;
+        .games-list .col-md-3 {
             text-align: center;
         }
-        .games-list li img {
+        .games-list .col-md-3 img {
             width: 100%;
+            min-width: 100%;
         }
-        .games-list li span {
+        .games-list .col-md-3 span {
             display: block;
             color: #000;
             text-decoration: none;
             padding: 5px 0;
         }
-        .games-list li a {
+        .games-list .col-md-3 a {
             text-decoration: none;
+        }
+        .filter-sections label{
+            padding-bottom: 10px;
+            display: block
+        }
+
+        .filter-sections input, .filter-sections select {
+            width: 190px
         }
     </style>    
 }
