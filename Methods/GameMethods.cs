@@ -1,7 +1,7 @@
 ﻿using HabaneroCodeTest.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,18 +13,16 @@ namespace HabaneroCodeTest.Methods
     {
         //HttpClient client = new HttpClient();
 
-        private const string APIKeyGames = "A50C2BDA-4ACF-42E8-AE22-971A9A9F47C7";
-        private const string BrandIdGames = "0d51cf4c-1d02-e711-80d9-000d3a802d1d";
-        private const string URLGetGames = "https://ws-test.insvr.com/jsonapi/GetGames";
+        private string APIKeyGames = ConfigurationManager.AppSettings["APIKeyGames"];
+        private string BrandIdGames = ConfigurationManager.AppSettings["BrandIdGames"];
+        private string URLGetGames = ConfigurationManager.AppSettings["URLGetGames"];
+        private string ImgEndpoint = ConfigurationManager.AppSettings["ImgEndpoint"];
+        private string GameEndpoint = ConfigurationManager.AppSettings["GameEndpoint"];
         private string HostName = HttpContext.Current.Request.Url.Authority;
-        public JObject JsonObject;
-        public string ImgEndpoint = "https://app-test.insvr.com/img/";
-        public string GameEndpoint = "https://app-test.insvr.com/games/";
         public List<Game> Games { get; set; }
-        public HttpClient client = new HttpClient();
         public class GamesResponse
         {
-            public List<Game> Games{ get; set; }
+            public List<Game> Games { get; set; }
         }
 
         public class RequestHabaAPI
