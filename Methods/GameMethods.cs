@@ -104,14 +104,14 @@ namespace HabaneroCodeTest.Methods
                     Name = g.Name,
                     KeyName = g.KeyName,
                     TranslatedNames = g.TranslatedNames,
+                    GameTypeName = g.GameTypeName,
+                    DtAdded = g.DtAdded,
                     Logos = new Logo
                     {
-                        Circle = $"{ImgEndpoint}circle/400/{g.KeyName}.png",
                         CircleFlat = $"{ImgEndpoint}circleflat/400/{g.KeyName}.png",
                         Rectangle = $"{ImgEndpoint}rectangle/400/{g.KeyName}.png",
                         Square = $"{ImgEndpoint}square/400/{g.KeyName}.png",
-                        Oval = $"{ImgEndpoint}oval/400/{g.KeyName}.png",
-                        OvalFlat = $"{ImgEndpoint}ovalflat/400/{g.KeyName}.png",
+                        OvalFlat = $"{ImgEndpoint}ovalflat/400/{g.KeyName}.png"
                     },
                     PlayLink = $"{GameEndpoint}?brandid={BrandIdGames}&keyname={g.KeyName}&mode=fun&lobbyurl={HostName}",
                 };

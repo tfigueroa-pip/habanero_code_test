@@ -49,10 +49,8 @@ public class Translatedname
 
 public class Logo
 {
-    public string Circle { get; set; }
     public string CircleFlat { get; set; }
     public string Rectangle { get; set; }
     public string Square { get; set; }
-    public string Oval { get; set; }
     public string OvalFlat { get; set; }
 }

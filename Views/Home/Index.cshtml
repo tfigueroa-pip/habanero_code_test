@@ -4,34 +4,53 @@
 }
 
 <main>
-    <section class="row" aria-labelledby="aspnetTitle" style="text-align: center">
+    <section class="row py-4" aria-labelledby="aspnetTitle" style="text-align: center">
         <h1 id="title">GAMES</h1>
+        <h4>Click the game to play in Fun Mode</h4>
     </section>
-    <div ng-app="gamesAngularList" ng-controller="gamesAngularController"  class="row">
+    <div ng-app="gamesAngularList" ng-controller="gamesAngularController"  class="row pt-4">
         <div class="col-md-3 col-xs-12 filter-sections border-right">
-            <label>
-                Search for Game:
+            <div class="input-section">
+                <strong>Search for Game Name:</strong>
                 <input type="text" ng-model="searchGameByName" />
-            </label>
-            <label>
-                Logo Type
-                <br/>
-                <select ng-model="logoType" ng-options="x for (x,y) in logoTypes">
-                    
+            </div>
+            <div class="input-section">
+                <strong>Change Logo Type</strong>
+                <select ng-init="logoType = logoTypes['Circle Flat']" ng-model="logoType" ng-options="x for (x,y) in logoTypes">
                 </select>
-            </label>
+            </div>
+            <div class="input-section game-type-section">
+                <strong>Select Game Type</strong>
+                <select ng-model="gameTypeSelector" ng-options="x for x in gameTypes">
+                </select>
+            </div>
+            <div class="input-section">
+                <strong>Order By</strong>
+                <label>
+                    <input type="radio" name="orderBy" ng-click="orderByThis('')" checked/> Default
+                </label>
+                <label>
+                    <input type="radio" name="orderBy" ng-click="orderByThis('Name')" /> Name
+                </label>
+                <label>
+                    <input type="radio" name="orderBy" ng-click="orderByThis('DtAdded')" /> Date Published
+                </label>
+                <label>
+                    <input type="radio" name="orderBy" ng-click="orderByThis('GameTypeName')" /> Game Type
+                </label>
+            </div>
         </div>
         <div class="col-md-9 col-xs-12 games-list">
             <div class="row">
-                <div ng-repeat="game in angularModel | filter : {Name: searchGameByName}" class="col-xs-6 col-md-3">
+                <div ng-style="gameCardStyle" ng-repeat="game in angularModel | filter : {Name: searchGameByName, GameTypeName: gameTypeSelector} | orderBy : gameOrdering" class="game-card col-sm-6 col-md-4 col-lg-3 pb-4" data-game-type="{{game.GameTypeName}}">
                     <a href="{{game.PlayLink}}" target="_blank">
-                        <img src="{{game.Logos.Circle}}" />
+                        <img src="https://app-test.insvr.com/img/{{logoType}}/400/{{game.KeyName}}.png/" />
                         <span><strong>{{game.Name}}</strong></span>
-                        <span>{{game.TranslatedNames[2].Translation}}</span>
+                        <span class="py-0">{{game.TranslatedNames[2].Translation}}</span>
                     </a>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </main>
@@ -40,47 +59,90 @@
     <script>
         var app = angular.module('gamesAngularList', []);
         var gameModel = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+        var gameTypes = gameModel.map(getGameTypes);
+        function getGameTypes(item) {
+            return item.GameTypeName;
+        };
+        gameTypes = [...new Set(gameTypes)];
+        var gameTypes2 = gameTypes.map(function (item,index) {
+            return {'name':item, 'index':index};
+        });
         console.log(gameModel);
         app.controller('gamesAngularController', function ($scope) {
             $scope.angularModel = gameModel;
-            $scope.logoTypes = gameModel[0].Logos;
+            $scope.logoTypes = {
+                'Circle Flat': 'circleflat',
+                'Oval Flat': 'ovalflat',
+                'Rectangle': 'rectangle',
+                'Square': 'square'
+            };
+            $scope.gameTypes = gameTypes;
+            $scope.orderByThis = function (x) {
+                $scope.gameOrdering = x;
+            };
         });
-        //console.log(model);
-        //console.log(model[0].Id);
-        //console.log(model[0].PlayLink);
-        //console.log(model[0].Logo);
     </script>
 }
 
 @section styles{
     <style>
+        h1 {
+            font-weight: 900;
+            font-size: 60px;
+        }
         .games-list {
             text-align: center;
             padding-top: 20px;
         }
-        .games-list .col-md-3 {
+        .games-list .game-card {
             text-align: center;
         }
-        .games-list .col-md-3 img {
+        .games-list .game-card img {
             width: 100%;
             min-width: 100%;
         }
-        .games-list .col-md-3 span {
+        .games-list .game-card span {
             display: block;
             color: #000;
             text-decoration: none;
             padding: 5px 0;
         }
-        .games-list .col-md-3 a {
+        .games-list .game-card a {
             text-decoration: none;
         }
-        .filter-sections label{
+        .filter-sections .input-section{
             padding-bottom: 10px;
             display: block
         }
-
-        .filter-sections input, .filter-sections select {
-            width: 190px
+        .input-section strong {
+            display: block
+        }
+        .input-section input, .input-section select {
+            border-radius: 5px; padding: 5px;
+        }
+        .filter-sections label {
+            display: block;
+        }
+        .filter-sections input[type='text'], .filter-sections select {
+            width: 90%;
+            max-width: 190px;
+        }
+        @@media (max-width: 767px){
+            .filter-sections .input-section:first-child, .filter-sections .input-section:last-child {
+                width: 100%;
+            }
+            .filter-sections .input-section:first-child input {
+                max-width: none;
+            }
+            .filter-sections .input-section {
+                text-align: center;
+                width: 49%;
+                display: inline-block;
+            }
+            .filter-sections label {
+                display: inline-block;
+                padding: 0 5px;
+            }
         }
     </style>    
 }
