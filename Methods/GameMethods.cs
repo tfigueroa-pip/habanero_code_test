@@ -1,18 +1,11 @@
 ﻿using HabaneroCodeTest.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.UI.WebControls;
-using System.Xml.Linq;
 
 namespace HabaneroCodeTest.Methods
 {
@@ -33,34 +26,6 @@ namespace HabaneroCodeTest.Methods
         {
             public List<Game> Games{ get; set; }
         }
-
-        //public void LoadJson() {
-
-        //    // read JSON directly from a file
-        //    using (StreamReader file = File.OpenText(@"C:\TIM\dev\HabaneroCodeTest\Content\response.json"))
-        //    using (JsonTextReader reader = new JsonTextReader(file))
-        //    {
-        //        JObject o = (JObject)JToken.ReadFrom(reader);
-        //        JsonObject = o;
-        //    }
-        //    var CreateListOfGames = new List<Game> { };
-        //    foreach (JObject g in JsonObject["Games"])
-        //    {
-        //        CreateListOfGames.Add(
-        //            new Game
-        //            {
-        //                Id = g["BrandGameId"].ToString(),
-        //                KeyName = g["KeyName"].ToString(), 
-        //                Name = g["Name"].ToString(),
-        //                NameCN = g["TranslatedNames"][2]["Translation"].ToString(),
-        //                Logo = $"{ImgEndpoint}circle/400/{g["KeyName"]}.png",
-        //                PlayLink = $"{GameEndpoint}?brandid={BrandIdGames}&keyname={g["KeyName"]}&mode=fun&lobbyurl={HostName}",
-        //            }
-        //        );
-        //    }
-        //    Games = CreateListOfGames;
-
-        //}
 
         public class RequestHaba
         {
