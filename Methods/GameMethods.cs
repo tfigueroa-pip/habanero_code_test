@@ -27,7 +27,7 @@ namespace HabaneroCodeTest.Methods
             public List<Game> Games{ get; set; }
         }
 
-        public class RequestHaba
+        public class RequestHabaAPI
         {
             public string BrandId { get; set; }
             public string APIKey { get; set; }
@@ -37,7 +37,7 @@ namespace HabaneroCodeTest.Methods
         {
             var request = new HttpRequestMessage(HttpMethod.Post, url);
             var httpCall = new HttpClient();
-            var reqModel = new RequestHaba()
+            var reqModel = new RequestHabaAPI()
             {
                 BrandId = brandId,
                 APIKey = apiKey
@@ -62,7 +62,6 @@ namespace HabaneroCodeTest.Methods
 
             foreach(var g in items.Games)
             {
-                var r = "";
                 var GameData = new Game
                 {
                     BrandGameId = g.BrandGameId,
@@ -83,7 +82,6 @@ namespace HabaneroCodeTest.Methods
                 createListOfGames.Add(
                     GameData
                 );
-                //TODO
             }
 
 
