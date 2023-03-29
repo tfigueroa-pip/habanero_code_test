@@ -18,3 +18,91 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/* Home Styles */
+h1 {
+    font-weight: 900;
+    font-size: 60px;
+}
+
+.games-list {
+    text-align: center;
+    padding-top: 20px;
+}
+
+    .games-list .game-card {
+        text-align: center;
+        transition: all 0.3s;
+        border-radius: 10px;
+    }
+
+        .games-list .game-card:hover {
+            box-shadow: 0px 0px 35px rgba(0,0,0,0.3)
+        }
+
+        .games-list .game-card img {
+            width: 100%;
+            min-width: 100%;
+            transition: all 0.3s;
+        }
+
+        .games-list .game-card:hover img {
+            filter: grayscale(50%);
+            transform: scale(1.05);
+        }
+
+        .games-list .game-card span {
+            display: block;
+            color: #000;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+
+        .games-list .game-card a {
+            text-decoration: none;
+        }
+
+.filter-sections .input-section {
+    padding-bottom: 10px;
+    display: block
+}
+
+.input-section strong {
+    display: block
+}
+
+.input-section input, .input-section select {
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.filter-sections label {
+    display: block;
+}
+
+.filter-sections input[type='text'], .filter-sections select {
+    width: 90%;
+    max-width: 190px;
+}
+
+@media (max-width: 767px) {
+    .filter-sections .input-section:first-child, .filter-sections .input-section:last-child {
+        width: 100%;
+    }
+
+        .filter-sections .input-section:first-child input {
+            max-width: none;
+        }
+
+    .filter-sections .input-section {
+        text-align: center;
+        width: 49%;
+        display: inline-block;
+    }
+
+    .filter-sections label {
+        display: inline-block;
+        padding: 0 5px;
+    }
+}
