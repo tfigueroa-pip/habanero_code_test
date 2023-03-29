@@ -4,13 +4,13 @@
 }
 
 <main>
-    <section class="row py-4" aria-labelledby="aspnetTitle" style="text-align: center">
+    <section class="row py-4 border-bottom" aria-labelledby="aspnetTitle" style="text-align: center">
         <h1 id="title">GAMES</h1>
         <h4>Click the game to play in Fun Mode</h4>
     </section>
-    <div ng-app="gamesAngularList" ng-controller="gamesAngularController"  class="row pt-4">
-        <div class="col-md-3 col-xs-12 filter-sections border-right">
-            <div class="input-section">
+    <div ng-app="gamesAngularList" ng-controller="gamesAngularController"  class="row ">
+        <div class="py-4 col-md-3 col-xs-12 filter-sections border-right">
+            <div class="py-4 input-section">
                 <strong>Search for Game Name:</strong>
                 <input type="text" ng-model="searchGameByName" />
             </div>
@@ -42,7 +42,7 @@
         </div>
         <div class="col-md-9 col-xs-12 games-list">
             <div class="row">
-                <div ng-style="gameCardStyle" ng-repeat="game in angularModel | filter : {Name: searchGameByName, GameTypeName: gameTypeSelector} | orderBy : gameOrdering" class="game-card col-sm-6 col-md-4 col-lg-3 pb-4" data-game-type="{{game.GameTypeName}}">
+                <div ng-style="gameCardStyle" ng-repeat="game in angularModel | filter : {Name: searchGameByName, GameTypeName: gameTypeSelector} | orderBy : gameOrdering" class="game-card col-sm-6 col-md-4 col-lg-3 py-4" data-game-type="{{game.GameTypeName}}">
                     <a href="{{game.PlayLink}}" target="_blank">
                         <img src="https://app-test.insvr.com/img/{{logoType}}/400/{{game.KeyName}}.png/" />
                         <span><strong>{{game.Name}}</strong></span>
@@ -96,10 +96,20 @@
         }
         .games-list .game-card {
             text-align: center;
+            transition: all 0.3s;
+            border-radius: 10px;
+        }
+        .games-list .game-card:hover {
+            box-shadow: 0px 0px 35px rgba(0,0,0,0.3)
         }
         .games-list .game-card img {
             width: 100%;
             min-width: 100%;
+            transition: all 0.3s;
+        }
+        .games-list .game-card:hover img {
+            filter: grayscale(50%);
+            transform: scale(1.05);
         }
         .games-list .game-card span {
             display: block;
