@@ -63,6 +63,18 @@ h1 {
             text-decoration: none;
         }
 
+        .games-list .game-card .game-meta span {
+            font-size: 0.8em;
+        }
+
+        .games-list .game-card .game-meta span.float-left {
+            float: left;
+        }
+
+        .games-list .game-card .game-meta span.float-right {
+            float: right;
+        }
+
 .filter-sections .input-section {
     padding-bottom: 10px;
     display: block
@@ -104,5 +116,10 @@ h1 {
     .filter-sections label {
         display: inline-block;
         padding: 0 5px;
+    }
+
+    .games-list .game-card .game-meta {
+        margin: 0 auto;
+        max-width: 400px;
     }
 }
