@@ -54,15 +54,18 @@ namespace HabaneroCodeTest.Methods
             return responseString;
         }
 
-        public List<Game> ListOfGames()
+        public List<Game> ListOfGames(int? clearcache)
         {
+            
             string cacheKey = "listOfGames";
             var cacheItemPolicy = new CacheItemPolicy
             {
-                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(60.0),
-
-            };
-            cache.Get(cacheKey);
+                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(60.0)
+            }; 
+            if (clearcache == 1)
+            {
+                cache.Remove(cacheKey);
+            }
             var itemsData = cache.Get(cacheKey);
 
             if (itemsData == null) 
@@ -92,7 +95,7 @@ namespace HabaneroCodeTest.Methods
                         Square = $"{ImgEndpoint}square/400/{g.KeyName}.png",
                         OvalFlat = $"{ImgEndpoint}ovalflat/400/{g.KeyName}.png"
                     },
-                    PlayLink = $"{GameEndpoint}?brandid={BrandIdGames}&keyname={g.KeyName}&mode=fun&lobbyurl={HostName}",
+                    PlayLink = $"{GameEndpoint}?brandid={BrandIdGames}&keyname={g.KeyName}&mode=fun&lobbyurl=http%3a%2f%2f{HostName}%2f",
                 };
                 createListOfGames.Add(
                     GameData
