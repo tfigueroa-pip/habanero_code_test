@@ -16,12 +16,13 @@ namespace HabaneroCodeTest.Methods
         //HttpClient client = new HttpClient();
 
         ObjectCache cache = MemoryCache.Default;
-        private string APIKeyGames = ConfigurationManager.AppSettings["APIKeyGames"];
-        private string BrandIdGames = ConfigurationManager.AppSettings["BrandIdGames"];
-        private string URLGetGames = ConfigurationManager.AppSettings["URLGetGames"];
-        private string ImgEndpoint = ConfigurationManager.AppSettings["ImgEndpoint"];
-        private string GameEndpoint = ConfigurationManager.AppSettings["GameEndpoint"];
-        private string HostName = HttpContext.Current.Request.Url.Authority;
+        private readonly string APIKeyGames = ConfigurationManager.AppSettings["APIKeyGames"];
+        private readonly string BrandIdGames = ConfigurationManager.AppSettings["BrandIdGames"];
+        private readonly string URLGetGames = ConfigurationManager.AppSettings["URLGetGames"];
+        private readonly string ImgEndpoint = ConfigurationManager.AppSettings["ImgEndpoint"];
+        private readonly string GameEndpoint = ConfigurationManager.AppSettings["GameEndpoint"]; 
+        private readonly int CacheTimeInMinutes = Int32.Parse(ConfigurationManager.AppSettings["CacheTimeInMinutes"]);
+        private readonly string HostName = HttpContext.Current.Request.Url.Authority;
         public List<Game> Games { get; set; }
         public class GamesResponse
         {
@@ -60,7 +61,7 @@ namespace HabaneroCodeTest.Methods
             string cacheKey = "listOfGames";
             var cacheItemPolicy = new CacheItemPolicy
             {
-                AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(60.0)
+                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(CacheTimeInMinutes)
             }; 
             if (clearcache == 1)
             {

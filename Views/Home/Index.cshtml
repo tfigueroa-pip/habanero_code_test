@@ -21,7 +21,9 @@
             </div>
             <div class="input-section game-type-section">
                 <strong>Select Game Type</strong>
-                <select ng-model="gameTypeSelector" ng-options="x for x in gameTypes">
+                <select ng-model="gameTypeSelector">
+                    <option label="All" value="" selected="selected">All</option>
+                    <option ng-repeat="x in gameTypes" label="{{x}}" value="{{x}}">{{x}}</option>
                 </select>
             </div>
             <div class="input-section">
